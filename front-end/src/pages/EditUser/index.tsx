@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 import PageHeader from '../../components/PageHeader'
 import UserForm from '../../components/UserForm'
 
-export default function EditUser() {
+const EditUser = () => {
   const [userName, setUserName] = useState('');
   const { id } = useParams();
 
@@ -31,3 +31,5 @@ export default function EditUser() {
     </>
   )
 }
+
+export default EditUser;

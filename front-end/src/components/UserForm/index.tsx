@@ -20,7 +20,7 @@ interface UserFormProps {
   buttonLabel: string;
 }
 
-export default function UserForm({ buttonLabel }: UserFormProps) {
+const UserForm = ({ buttonLabel }: UserFormProps) => {
   const [user, setUser] = useState<User>({ 
     name: '', cpf: '', birthDate: '' 
   });
@@ -112,7 +112,7 @@ export default function UserForm({ buttonLabel }: UserFormProps) {
     } catch(error) {
       console.log(error);
     }
-    
+
     navigate('/users');
   }
 
@@ -156,3 +156,5 @@ export default function UserForm({ buttonLabel }: UserFormProps) {
     </form>
   )
 }
+
+export default UserForm;
