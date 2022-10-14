@@ -7,21 +7,21 @@ import { cpfMask } from '../../utils/cpfMask';
 import { calculateAge } from '../../utils/calculateAge';
 
 interface CardDataProps {
-	id: string;
-	name: string;
-	cpf: string;
-	birthDate: string;
-	inactive: boolean;
+	user: {
+		id: string;
+		name: string;
+		cpf: string;
+		birthDate: string;
+		inactive: boolean;
+	}
 }
 
-const Card = ({ 
-	id, name, cpf, birthDate, inactive, 
-}: CardDataProps) => {
-
+const Card = ({ user }: CardDataProps) => {
 	function handleInactiveUser() {
 		try {
-			axios.put(`http://localhost:3333/users/${id}`, {
-				inactive: !inactive,
+			axios.put(`http://localhost:3333/users/${user.id}`, {
+				...user,
+				inactive: !user.inactive,
 			});		
 		} catch(error) {
 			console.log(error);
@@ -30,31 +30,29 @@ const Card = ({
 
   function handleDeleteUser() {
 		try {
-			axios.delete(`http://localhost:3333/users/${id}`);
+			axios.delete(`http://localhost:3333/users/${user.id}`);
 		} catch(error) {
 			console.log(error);
 		}
 	}
 
 	return (
-		<Container isInative={inactive} >
+		<Container isInative={user.inactive} >
 			<div className="info">
 				<button onClick={handleInactiveUser}>
-					{inactive ? 'reativar' : 'inativar'}
+					{user.inactive ? 'reativar' : 'inativar'}
 				</button>
 				<div className="user-name">
-					<strong>{name}</strong>
+					<strong>{user.name}</strong>
 				</div>
-				<span>{cpfMask(cpf)}</span>
-				<span>{calculateAge(birthDate)} ano(s)</span>
+				<span>{cpfMask(user.cpf)}</span>
+				<span>{calculateAge(user.birthDate)} ano(s)</span>
 			</div>
 
 			<div className="actions">
 				<Link 
-					to={`/users/${id}`} 
-					state={{
-						id, name, cpf, birthDate, inactive,
-					}}
+					to={`/users/${user.id}`} 
+					state={user}
 				>
 					<PencilSimple size={24} />
 				</Link>

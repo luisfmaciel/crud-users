@@ -1,21 +1,16 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import PageHeader from '../../components/PageHeader'
 import UserForm from '../../components/UserForm'
 
 const EditUser = () => {
   const [userName, setUserName] = useState('');
-  const { id } = useParams();
+  const location =  useLocation();
+  const { state } = location;
 
   useEffect(() => {
-    try {
-      axios.get(`http://localhost:3333/users/${id}`)
-        .then(response => {
-          setUserName(response.data[0].name);    
-      }); 
-    } catch(error) {
-      console.log(error);
+    if (state) {
+      setUserName(state.name)
     }
   }, []);
 
