@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import useErrors from '../../hooks/useErrors';
 import { cpfMask } from '../../utils/cpfMask';
@@ -24,16 +24,16 @@ const UserForm = ({ buttonLabel }: UserFormProps) => {
   const [user, setUser] = useState<User>({ 
     name: '', cpf: '', birthDate: '' 
   });
-  const { id } = useParams();
   const location = useLocation();
   const { state } = location;
   const navigate = useNavigate();
+
   const {
     setError, removeError, getErrorMessageByFieldName, errors,
-  } = useErrors();
+  } = useErrors();  
 
-  useEffect(() => {
-    if(id) {
+  useEffect(() => { 
+    if(state) {
       setUser({
         ...state,
         cpf: cpfMask(state.cpf)
@@ -95,19 +95,10 @@ const UserForm = ({ buttonLabel }: UserFormProps) => {
     }
 
     try {
-      if(id) {
-        axios.put(`http://localhost:3333/users/${id}`, {
-          ...user,
-          name: user.name,
-          cpf: user.cpf,
-          birthDate: user.birthDate,
-        });
+      if(state) {
+        axios.put(`http://localhost:3333/users/${state.id}`, user);   
       } else {
-        axios.post('http://localhost:3333/new', {
-          name: user.name,
-          cpf: user.cpf,
-          birthDate: user.birthDate,
-        });
+        axios.post('http://localhost:3333/new', user);
       }
     } catch(error) {
       console.log(error);

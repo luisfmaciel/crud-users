@@ -40,11 +40,7 @@ const Home = () => {
         return (
           <Card
             key={user.id} 
-            id={user.id} 
-            name={user.name} 
-            cpf={user.cpf} 
-            birthDate={user.birthDate} 
-            inactive={user.inactive}
+            user={user}
           />  
         )
       })}
