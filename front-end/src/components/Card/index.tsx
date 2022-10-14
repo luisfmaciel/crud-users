@@ -14,7 +14,7 @@ interface CardDataProps {
 	inactive: boolean;
 }
 
-export const Card = ({ 
+const Card = ({ 
 	id, name, cpf, birthDate, inactive, 
 }: CardDataProps) => {
 
@@ -68,3 +68,5 @@ export const Card = ({
 		</Container>
 	)
 }
+
+export default Card;

@@ -5,8 +5,10 @@ interface ButtonProps {
   children: React.ReactNode;
 }
 
-export default function Button({ type, children }: ButtonProps) {
+const Button = ({ type, children }: ButtonProps) => {
   return (
     <StyledButton type={type} >{children}</StyledButton>
   );
 }
+
+export default Button;

@@ -5,7 +5,7 @@ interface Error {
   message: string;
 }
 
-export default function useErrors() {
+const useErrors = () => {
   const [errors, setErrors] = useState<Error[]>([]);
 
   function setError({ field, message }: Error) {
@@ -35,3 +35,5 @@ export default function useErrors() {
     setError, removeError, getErrorMessageByFieldName, errors,
   };
 }
+
+export default useErrors;

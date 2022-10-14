@@ -4,7 +4,7 @@ import Home from './pages/Home';
 import NewUser from './pages/NewUser';
 import EditUser from './pages/EditUser';
 
-export default function AppRoutes() {
+const AppRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
@@ -19,3 +19,5 @@ export default function AppRoutes() {
     </BrowserRouter>
   );
 }
+
+export default AppRoutes;

@@ -5,7 +5,7 @@ import AppRoutes from '../../routes';
 import Header from '../Header';
 import { Container } from './style';
 
-function App() {
+const App = () => {
   return (
     <ThemeProvider theme={defaultTheme}>
       <GlobalStyle />

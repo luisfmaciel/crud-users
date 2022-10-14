@@ -6,7 +6,7 @@ interface FormGroupProps {
   error: string | undefined;
 }
 
-export default function FormGroup({ children, error }: FormGroupProps) {
+const FormGroup = ({ children, error }: FormGroupProps) => {
   return (
     <Container>
       <div className="form-item">
@@ -17,3 +17,5 @@ export default function FormGroup({ children, error }: FormGroupProps) {
     </Container>
   )
 }
+
+export default FormGroup;

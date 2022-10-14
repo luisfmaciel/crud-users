@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-import { Card } from "../../components/Card";
+import Card  from "../../components/Card";
 import { Container, EmptyListText, Header } from "./styles";
 
 interface User {
@@ -13,7 +13,7 @@ interface User {
   inactive: boolean;
 }
 
-export default function Home() {
+const Home = () => {
   const [users, setUsers] = useState<User[]>([]);
   
   useEffect(() => {
@@ -51,3 +51,5 @@ export default function Home() {
     </Container>
   );
 }
+
+export default Home;
