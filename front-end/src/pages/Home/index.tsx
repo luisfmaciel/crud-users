@@ -2,9 +2,8 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-import Card from "../../components/Card";
+import { Card } from "../../components/Card";
 import { Container, EmptyListText, Header } from "./styles";
-import { calculateAge } from '../../utils/calculateAge';
 
 interface User {
   id: string;
@@ -19,7 +18,7 @@ export default function Home() {
   
   useEffect(() => {
     try {
-      axios('http://localhost:3333/users')
+      axios.get('http://localhost:3333/users')
         .then(response => {
           setUsers(response.data)
         });
@@ -44,7 +43,7 @@ export default function Home() {
             id={user.id} 
             name={user.name} 
             cpf={user.cpf} 
-            age={calculateAge(user.birthDate)} 
+            birthDate={user.birthDate} 
             inactive={user.inactive}
           />  
         )
