@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import useErrors from '../../hooks/useErrors';
 import { cpfMask } from '../../utils/cpfMask';
@@ -22,30 +22,22 @@ interface UserFormProps {
 
 export default function UserForm({ buttonLabel }: UserFormProps) {
   const [user, setUser] = useState<User>({ 
-    name: '', 
-    cpf: '', 
-    birthDate: '' 
+    name: '', cpf: '', birthDate: '' 
   });
   const { id } = useParams();
+  const location = useLocation();
+  const { state } = location;
   const navigate = useNavigate();
-
   const {
     setError, removeError, getErrorMessageByFieldName, errors,
   } = useErrors();
 
   useEffect(() => {
     if(id) {
-      try {
-        axios.get(`http://localhost:3333/users/${id}`)
-          .then(response => {
-            setUser({
-              ...response.data[0],
-              cpf: cpfMask(response.data[0].cpf)
-            });    
-        }); 
-      } catch(error) {
-        console.log(error);
-      }
+      setUser({
+        ...state,
+        cpf: cpfMask(state.cpf)
+      });
     }
   }, []);
 
@@ -110,19 +102,18 @@ export default function UserForm({ buttonLabel }: UserFormProps) {
           cpf: user.cpf,
           birthDate: user.birthDate,
         });
-        navigate('/users');
-        return;
+      } else {
+        axios.post('http://localhost:3333/new', {
+          name: user.name,
+          cpf: user.cpf,
+          birthDate: user.birthDate,
+        });
       }
-  
-      axios.post('http://localhost:3333/new', {
-        name: user.name,
-        cpf: user.cpf,
-        birthDate: user.birthDate,
-      });
-      navigate('/users');
     } catch(error) {
       console.log(error);
     }
+    
+    navigate('/users');
   }
 
   return (
@@ -133,7 +124,7 @@ export default function UserForm({ buttonLabel }: UserFormProps) {
           error={getErrorMessageByFieldName('name')}
           onChange={handleNameChange}
           placeholder="Nome *"
-          value={user.name || ''}
+          value={user.name}
         />
       </FormGroup>
       
@@ -143,7 +134,7 @@ export default function UserForm({ buttonLabel }: UserFormProps) {
           error={getErrorMessageByFieldName('cpf')}
           onChange={handleCpfChange}
           placeholder="CPF *"
-          value={user.cpf || ''}
+          value={user.cpf}
         />
       </FormGroup>
       
@@ -153,7 +144,7 @@ export default function UserForm({ buttonLabel }: UserFormProps) {
           error={getErrorMessageByFieldName('birthDate')}
           onChange={handleBirthDateChange}
           placeholder="Data de Nascimento *"
-          value={user.birthDate || ''}
+          value={user.birthDate}
         />
       </FormGroup>
 
